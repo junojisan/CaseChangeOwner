@@ -1,0 +1,31 @@
+<apex:page standardController="Case" extensions="CaseChangeOwnerFromListViewController" recordSetVar="cases">
+    <apex:form id="fm">
+        <apex:sectionHeader title="ケース 所有者の変更" />
+        <apex:outputPanel id="opInfo">
+         ケースの所有者を別のユーザまたはキューに変更します。ケースを移行すると、次の情報も同時に移行されます:
+            <ul>
+                <li>現在の所有者に割り当てられているこのケースのすべての活動予定 (ToDoと行動)</li>
+            </ul>
+        完了活動は移行されません。また、このケースをキューに割り当てるときに、活動予定は移行されません。<br/><br/>
+        </apex:outputPanel>
+        
+        <apex:pageMessages />
+    
+        <apex:outputPanel id="opNotSelected" rendered="{!NOT(isSelected)}">
+            <apex:commandButton value="キャンセル" action="{!cancel}" />
+        </apex:outputPanel>
+        <apex:pageBlock mode="edit" rendered="{!isSelected}">
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="保存" action="{!save}" />
+                <apex:commandButton value="キャンセル" action="{!cancel}" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1" title="新規所有者の選択">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="このケースを移行" />
+                    <apex:outputText value="{!caseNumbers}"/>
+                </apex:pageBlockSectionItem>
+                <apex:inputField value="{!Case.OwnerId}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
